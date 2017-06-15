@@ -1,0 +1,44 @@
+{
+  "name": "agricola-score",
+  "version": "1.0.0",
+  "description": "Agricola score calculator",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramirozap/agricola-score.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramirozap/agricola-score/issues"
+  },
+  "homepage": "https://github.com/ramirozap/agricola-score#readme",
+  "dependencies": {
+    "react": "^15.6.0",
+    "react-dom": "^15.6.0",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-jest": "^20.0.3",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "html-webpack-plugin": "^2.28.0",
+    "jest": "^20.0.4",
+    "redux-mock-store": "^1.2.3",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
