@@ -1,7 +1,7 @@
 import { addUser, removeUser } from './userActions'
 
 describe('users actions', () => {
-  it('should create an action to add a user', () => {
+  it('should create an action to add an user', () => {
     const userName = 'ramirozap'
     const expectedAction = {
       type: 'ADD_USER',
