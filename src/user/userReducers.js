@@ -3,7 +3,14 @@ const userReducer = (state = [], action) => {
     case 'ADD_USER':
       return [
         ...state,
-        {userName: action.userName}
+        {name: action.userName}
+      ]
+      break;
+    case 'DELETE_USER':
+      let userPosition = state.findIndex( user => user.name === action.userName)
+      return [
+        ...state.slice(0, userPosition),
+        ...state.slice(userPosition + 1)
       ]
       break;
     default:
