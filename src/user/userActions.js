@@ -4,3 +4,10 @@ export function addUser(userName) {
     userName
   }
 }
+
+export function removeUser(userName) {
+  return {
+    type: 'REMOVE_USER',
+    userName
+  }
+}
