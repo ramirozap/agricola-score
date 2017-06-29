@@ -24,7 +24,7 @@ describe('Test User Reducers', () => {
       ).toEqual([{name: 'ramirozap'},{name: 'acyd'}])
     })
   })
-  describe('Test REMOVE_USER action', () => {
+  describe('Test DELETE_USER action', () => {
     it('should remove an user from the state', () => {
       let initialState = [{name: 'ramirozap'}]
       deepFreeze(initialState)
