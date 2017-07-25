@@ -1,9 +1,9 @@
 import { combineReducers, createStore } from 'redux'
 
-import userReducer from './user/userReducers'
+import gameReducers from './game/gameReducers'
 
 const rootReducer = combineReducers({
-  users: userReducer,
+  players: gameReducers,
 })
 const store = createStore(rootReducer)
 
