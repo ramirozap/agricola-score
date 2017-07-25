@@ -3,7 +3,10 @@ const gameReducer = (state = [], action) => {
     case 'ADD_PLAYER':
       return [
         ...state,
-        action.player
+        {
+          name: action.playerName,
+          color: action.color
+        }
       ]
       break;
     case 'DELETE_PLAYER':
