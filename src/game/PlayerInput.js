@@ -7,54 +7,44 @@ class PlayerInput extends React.Component {
     super(props)
     this.state = {
       playerName: '',
+      selectedColor: 'blue',
       colorList: [
-        {
-          name: 'blue',
-          used: false
-        },
-        {
-          name: 'red',
-          used: false
-        },
-        {
-          name: 'purple',
-          used: false
-        },
-        {
-          name: 'green',
-          used: false
-        },
-        {
-          name: 'white',
-          used: false
-        }
+         'blue',
+         'red',
+         'purple',
+         'green',
+         'white'
       ]
     };
 
     this.addPlayer = this.addPlayer.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.selectColor = this.selectColor.bind(this)
   }
   handleChange(event) {
     this.setState({playerName: event.target.value});
   }
+  selectColor(event){
+    this.setState({selectedColor: event.target.value});
+  }
   addPlayer(){
-    this.props.addPlayer(this.state.playerName, 'blue')
-    this.setState({playerName: ''});
+    this.props.addPlayer(this.state.playerName, this.state.selectedColor)
+    this.setState({
+      playerName: ''
+    });
   }
   render(){
     return (
       <div>
         <input type="text" value={this.state.playerName} onChange={this.handleChange} />
-        <select name="" id="">
+        <select name="" id="color-select" onChange={this.selectColor} disabled={this.state.colorList.length === 0}>
           {
             this.state.colorList.map((color, i) => {
-              if (!color.used) {
-                return <option value="color" key={i} defaultValue={i === 0}>{color.name}</option>
-              }
+                return <option value={color} key={i} defaultValue={this.state.selectedColor === color}>{color}</option>
             })
           }
         </select>
-        <button onClick={this.addPlayer} type="button">Add Player</button>
+        <button onClick={this.addPlayer} type="button" disabled={this.props.players.length >= 5}>Add Player</button>
         <PlayerList players={this.props.players}/>
       </div>
     )
