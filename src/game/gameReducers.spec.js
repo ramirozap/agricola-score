@@ -14,10 +14,8 @@ describe('Test User Reducers', () => {
       expect(
         gameReducers(initialState, {
           type: 'ADD_PLAYER',
-          player: {
-            name: 'ramiro',
-            color: 'blue'
-          }
+          playerName: 'ramiro',
+          color: 'blue'
         })
       ).toEqual([{
         name: 'ramiro',
