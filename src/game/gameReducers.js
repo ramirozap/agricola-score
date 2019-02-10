@@ -1,24 +1,21 @@
 const gameReducer = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_PLAYER':
+    case "ADD_PLAYER":
       return [
         ...state,
         {
           name: action.playerName,
           color: action.color
         }
-      ]
-      break;
-    case 'DELETE_PLAYER':
-      let userPosition = state.findIndex( user => user.name === action.userName)
+      ];
+    case "DELETE_PLAYER":
       return [
         ...state.slice(0, action.playerPosition),
         ...state.slice(action.playerPosition + 1)
-      ]
-      break;
+      ];
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default gameReducer
+export default gameReducer;
