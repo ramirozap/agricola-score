@@ -1,19 +1,26 @@
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import * as React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Route } from "react-router";
 
-import * as gameActions from './game/gameActions'
-import PlayerInput from './game/PlayerInput'
+import * as gameActions from "./game/gameActions";
+import PlayerInput from "./game/PlayerInput";
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     players: state.players
-  }
+  };
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators(gameActions, dispatch)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(gameActions, dispatch);
 }
 
-const App = connect(mapStateToProps, mapDispatchToProps)(PlayerInput)
+const PlayerComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerInput);
 
-export default App
+const App = () => <Route path="/" component={PlayerComponent} />;
+
+export default App;
