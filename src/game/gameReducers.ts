@@ -1,6 +1,10 @@
-const gameReducer = (state = [], action) => {
+import { GameAction, Player } from './gameTypes';
+
+const defaultState: Player[] = [];
+
+const gameReducer = (state = defaultState, action: GameAction) => {
   switch (action.type) {
-    case "ADD_PLAYER":
+    case 'ADD_PLAYER':
       return [
         ...state,
         {
@@ -8,10 +12,10 @@ const gameReducer = (state = [], action) => {
           color: action.color
         }
       ];
-    case "DELETE_PLAYER":
+    case 'DELETE_PLAYER':
       return [
         ...state.slice(0, action.playerPosition),
-        ...state.slice(action.playerPosition + 1)
+        ...state.slice(action.playerPosition! + 1)
       ];
     default:
       return state;

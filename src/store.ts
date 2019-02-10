@@ -1,6 +1,6 @@
-import { combineReducers, createStore } from "redux";
+import { combineReducers, createStore } from 'redux';
 
-import gameReducers from "./game/gameReducers";
+import gameReducers from './game/gameReducers';
 
 const rootReducer = combineReducers({
   players: gameReducers
