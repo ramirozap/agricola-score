@@ -1,5 +1,7 @@
-import React from "react";
-
+import * as React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as gameActions from "./gameActions";
 import PlayerList from "./PlayerList";
 
 class PlayerInput extends React.Component {
@@ -62,4 +64,17 @@ class PlayerInput extends React.Component {
   }
 }
 
-export default PlayerInput;
+function mapStateToProps(state) {
+  return {
+    players: state.players
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(gameActions, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerInput);
