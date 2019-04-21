@@ -8,14 +8,14 @@ const gameReducer = (state = defaultState, action: GameAction) => {
       return [
         ...state,
         {
-          name: action.playerName,
-          color: action.color
+          name: action.payload.playerName,
+          color: action.payload.color
         }
       ];
-    case 'DELETE_PLAYER':
+    case 'REMOVE_PLAYER':
       return [
-        ...state.slice(0, action.playerPosition),
-        ...state.slice(action.playerPosition! + 1)
+        ...state.slice(0, action.payload.playerPosition),
+        ...state.slice(action.payload.playerPosition! + 1)
       ];
     default:
       return state;

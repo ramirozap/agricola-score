@@ -5,18 +5,17 @@ describe('Test Game Actions', () => {
     const playerName = 'ramirozap';
     const color = 'blue';
     const expectedAction = {
-      type: "ADD_PLAYER",
-      playerName,
-      color
+      type: 'ADD_PLAYER',
+      payload: { playerName, color }
     };
     expect(addPlayer(playerName, color)).toEqual(expectedAction);
   });
   it('should create an action to remove a player', () => {
-    const playerName = 'ramirozap';
+    const playerPosition = 0;
     const expectedAction = {
-      type: "REMOVE_PLAYER",
-      playerName
+      type: 'REMOVE_PLAYER',
+      payload: { playerPosition }
     };
-    expect(removePlayer(playerName)).toEqual(expectedAction);
+    expect(removePlayer(playerPosition)).toEqual(expectedAction);
   });
 });

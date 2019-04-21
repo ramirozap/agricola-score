@@ -1,24 +1,31 @@
-export interface GameAction {
-  type: string;
-  playerName?: string;
-  color?: string;
-  playerPosition?: number;
+export interface AddPlayerAction {
+  type: 'ADD_PLAYER';
+  payload: { playerName: string; color: string };
 }
+
+export interface RemovePlayerAction {
+  type: 'REMOVE_PLAYER';
+  payload: { playerPosition: number };
+}
+
+export type GameAction = RemovePlayerAction | AddPlayerAction;
 
 export interface Quantities {
   beggarCards: number;
-  boarsPoints: number;
+  boars: number;
   bonusPoints: number;
   cardPoints: number;
-  cattlesPoints: number;
-  clayRoomsPoints: number;
-  familyMembersPoints: number;
-  fencedStablesPoints: number;
-  fieldsPoints: number;
-  grainSheepsPoints: number;
-  pasturesVegetablesPoints: number;
-  stoneRoomsPoints: number;
-  unusedSpacesPoints: number;
+  cattles: number;
+  clayRooms: number;
+  familyMembers: number;
+  fencedStables: number;
+  fields: number;
+  grains: number;
+  sheeps: number;
+  pastures: number;
+  stoneRooms: number;
+  unusedSpaces: number;
+  vegetables: number;
 }
 
 export interface Player {

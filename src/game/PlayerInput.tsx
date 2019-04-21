@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as gameActions from './gameActions';
 import PlayerList from './PlayerList';
+
+const { useState } = React;
 
 const PlayerInput: React.SFC<any> = props => {
   const [playerName, setPlayerName] = useState('');

@@ -3,19 +3,19 @@ import deepFreeze from 'deep-freeze';
 
 import { Player } from './gameTypes';
 
+const defaultState: Player[] = [];
+deepFreeze(defaultState);
+
 describe('Test User Reducers', () => {
-  it('should return the default state', () => {
-    expect(gameReducer(undefined, { type: 'INVALID_ACTION' })).toEqual([]);
-  });
   describe('Test ADD_PLAYER action', () => {
     it('should create a game', () => {
-      let initialState: Player[] = [];
-      deepFreeze(initialState);
       expect(
-        gameReducer(initialState, {
+        gameReducer(defaultState, {
           type: 'ADD_PLAYER',
-          playerName: 'ramiro',
-          color: 'blue'
+          payload: {
+            playerName: 'ramiro',
+            color: 'blue'
+          }
         })
       ).toEqual([
         {
