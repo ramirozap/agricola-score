@@ -1,7 +1,24 @@
 import { createSelector } from 'reselect';
+import { Quantities } from './gameTypes';
 
-export const fieldsPoints = (fields = 0) => {
-  if (fields <= 1) {
+export const selectBeggarCards = (state: Quantities) => state.beggarCards;
+export const selectBoars = (state: Quantities) => state.boars;
+export const selectBonusPoints = (state: Quantities) => state.bonusPoints;
+export const selectCardPoints = (state: Quantities) => state.cardPoints;
+export const selectCattles = (state: Quantities) => state.cattles;
+export const selectClayRooms = (state: Quantities) => state.clayRooms;
+export const selectFamilyMembers = (state: Quantities) => state.familyMembers;
+export const selectFencedStables = (state: Quantities) => state.fencedStables;
+export const selectFields = (state: Quantities) => state.fields;
+export const selectGrains = (state: Quantities) => state.grains;
+export const selectSheeps = (state: Quantities) => state.sheeps;
+export const selectPastures = (state: Quantities) => state.pastures;
+export const selectStoneRooms = (state: Quantities) => state.stoneRooms;
+export const selectUnusedSpaces = (state: Quantities) => state.unusedSpaces;
+export const selectVegetables = (state: Quantities) => state.vegetables;
+
+const fieldsPoints = (fields: Quantities['fields']) => {
+  if (fields <= 1 || !fields) {
     return -1;
   }
   if (fields <= 4) {
@@ -10,8 +27,10 @@ export const fieldsPoints = (fields = 0) => {
   return 4;
 };
 
-export const pasturesVegetablesPoints = (total = 0) => {
-  if (total <= 0) {
+const pasturesVegetablesPoints = (
+  total: Quantities['pastures'] | Quantities['vegetables']
+) => {
+  if (total <= 0 || !total) {
     return -1;
   }
   if (total < 4) {
@@ -20,8 +39,10 @@ export const pasturesVegetablesPoints = (total = 0) => {
   return 4;
 };
 
-export const grainSheepsPoints = (total = 0) => {
-  if (total < 1) {
+const grainSheepsPoints = (
+  total: Quantities['sheeps'] | Quantities['fields']
+) => {
+  if (total < 1 || !total) {
     return -1;
   }
   if (total <= 3) {
@@ -36,8 +57,8 @@ export const grainSheepsPoints = (total = 0) => {
   return 4;
 };
 
-export const boarsPoints = (boars = 0) => {
-  if (boars < 1) {
+const boarsPoints = (boars: Quantities['boars']) => {
+  if (boars < 1 || !boars) {
     return -1;
   }
   if (boars <= 2) {
@@ -52,7 +73,7 @@ export const boarsPoints = (boars = 0) => {
   return 4;
 };
 
-export const cattlesPoints = (cattles = 0) => {
+const cattlesPoints = (cattles: Quantities['cattles']) => {
   if (cattles < 1) {
     return -1;
   }
@@ -68,56 +89,125 @@ export const cattlesPoints = (cattles = 0) => {
   return 4;
 };
 
-export const unusedSpacesPoints = ({
-  unusedSpaces
-}: {
-  unusedSpaces: number;
-}) => unusedSpaces * -1;
+const unusedSpacesPoints = (unusedSpaces: Quantities['unusedSpaces']) =>
+  unusedSpaces * -1;
 
-export const fencedStablesPoints = ({
-  fencedStables
-}: {
-  fencedStables: number;
-}) => fencedStables;
+const identity = (quantity: number) => quantity;
 
-export const clayRoomsPoints = ({ clayRooms }: { clayRooms: number }) =>
-  clayRooms;
-
-export const stoneRoomsPoints = ({ stoneRooms }: { stoneRooms: number }) =>
+const stoneRoomsPoints = (stoneRooms: Quantities['stoneRooms']) =>
   stoneRooms * 2;
 
-export const familyMembersPoints = ({
-  familyMembers
-}: {
-  familyMembers: number;
-}) => familyMembers * 3;
+const familyMembersPoints = (familyMembers: Quantities['familyMembers']) =>
+  familyMembers * 3;
 
-export const cardPoints = ({ cardPoints }: { cardPoints: number }): number =>
-  cardPoints;
-
-export const bonusPoints = ({ bonusPoints }: { bonusPoints: number }) =>
-  bonusPoints;
-
-export const beggarCardsPoints = ({ beggarCards }: { beggarCards: number }) =>
+const beggarCardsPoints = (beggarCards: Quantities['beggarCards']) =>
   beggarCards * -3;
 
-const sum = (prev: number, current: number) => current + prev;
+const sum = (...args: number[]) =>
+  args.reduce((prev: number, current: number) => current + prev, 0);
 
-//todo: compose getTotal points selector, too many parameters
+export const getFieldsPoints = createSelector(
+  selectFields,
+  fieldsPoints
+);
+
+export const getPasturesPoints = createSelector(
+  selectPastures,
+  pasturesVegetablesPoints
+);
+
+export const getGrainPoints = createSelector(
+  selectGrains,
+  grainSheepsPoints
+);
+
+export const getVegetablesPoints = createSelector(
+  selectVegetables,
+  pasturesVegetablesPoints
+);
+
+export const getCropsPoints = createSelector(
+  getGrainPoints,
+  getVegetablesPoints,
+  sum
+);
+
+export const getSheepsPoints = createSelector(
+  selectSheeps,
+  grainSheepsPoints
+);
+
+export const getBoarsPoints = createSelector(
+  selectBoars,
+  boarsPoints
+);
+
+export const getCattlesPoints = createSelector(
+  selectCattles,
+  cattlesPoints
+);
+
+export const getAnimalsPoints = createSelector(
+  getSheepsPoints,
+  getBoarsPoints,
+  getCattlesPoints,
+  sum
+);
+
+export const getUnusedSpacesPoints = createSelector(
+  selectUnusedSpaces,
+  unusedSpacesPoints
+);
+
+export const getFencedStablesPoints = createSelector(
+  selectFencedStables,
+  identity
+);
+
+export const getClayRoomsPoints = createSelector(
+  selectClayRooms,
+  identity
+);
+
+export const getStoneRoomsPoints = createSelector(
+  selectStoneRooms,
+  stoneRoomsPoints
+);
+
+export const getFamilyMembersPoints = createSelector(
+  selectFamilyMembers,
+  familyMembersPoints
+);
+
+export const getBonusPoints = createSelector(
+  selectBonusPoints,
+  identity
+);
+
+export const getCardsPoints = createSelector(
+  selectCardPoints,
+  identity
+);
+
+export const getBeggarCardsPoints = createSelector(
+  selectBeggarCards,
+  beggarCardsPoints
+);
 
 export const getTotalPoints = createSelector(
-  beggarCardsPoints,
-  boarsPoints,
-  bonusPoints,
-  cardPoints,
-  cattlesPoints,
-  clayRoomsPoints,
-  familyMembersPoints,
-  fencedStablesPoints,
-  fieldsPoints,
-  grainSheepsPoints,
-  pasturesVegetablesPoints,
-  stoneRoomsPoints,
-  unusedSpacesPoints,
-  (...args) => args.reduce(sum, 0)
+  [
+    getFieldsPoints,
+    getPasturesPoints,
+    getCropsPoints,
+    getAnimalsPoints,
+    getUnusedSpacesPoints,
+    getFencedStablesPoints,
+    getClayRoomsPoints,
+    getStoneRoomsPoints,
+    getBonusPoints,
+    getFamilyMembersPoints,
+    getCardsPoints,
+    getBeggarCardsPoints
+  ],
+  sum
 );

@@ -1,187 +1,233 @@
+import { Quantities } from './gameTypes';
 import {
-  beggarCardsPoints,
-  boarsPoints,
-  bonusPoints,
-  cardPoints,
-  cattlesPoints,
-  clayRoomsPoints,
-  familyMembersPoints,
-  fencedStablesPoints,
-  fieldsPoints,
+  getBeggarCardsPoints,
+  getBoarsPoints,
+  getBonusPoints,
+  getCardsPoints,
+  getCattlesPoints,
+  getClayRoomsPoints,
+  getFamilyMembersPoints,
+  getFencedStablesPoints,
+  getFieldsPoints,
   getTotalPoints,
-  grainSheepsPoints,
-  pasturesVegetablesPoints,
-  stoneRoomsPoints,
-  unusedSpacesPoints
+  getSheepsPoints,
+  getPasturesPoints,
+  getAnimalsPoints,
+  getGrainPoints,
+  getVegetablesPoints,
+  getUnusedSpacesPoints,
+  getStoneRoomsPoints,
+  getCropsPoints
 } from './pointSelectors';
 
-const bigInt = 99999;
+const BIG_INT: number = 99999;
+let baseState: Quantities;
 
-describe('Test Scoring functions', () => {
-  describe('Test fieldsPoints scoring function', () => {
-    it('should return -1 when no parameters are passed or negatives numbers are passed', () => {
-      expect(fieldsPoints()).toEqual(-1);
-      expect(fieldsPoints(-1)).toEqual(-1);
-      expect(fieldsPoints(0)).toEqual(-1);
+describe('Scoring functions: ', () => {
+  beforeEach(() => {
+    baseState = {
+      beggarCards: 0,
+      boars: 0,
+      bonusPoints: 0,
+      cardPoints: 0,
+      cattles: 0,
+      clayRooms: 0,
+      familyMembers: 0,
+      fencedStables: 0,
+      fields: 0,
+      grains: 0,
+      sheeps: 0,
+      pastures: 0,
+      stoneRooms: 0,
+      unusedSpaces: 0,
+      vegetables: 0
+    };
+  });
+  describe('getFieldsPoints', () => {
+    it('-1 point when fields are less than 2', () => {
+      expect(getFieldsPoints({ ...baseState, fields: -1 })).toEqual(-1);
+      expect(getFieldsPoints({ ...baseState, fields: 0 })).toEqual(-1);
     });
-    it('should return 1 when a value of 2 is passed', () => {
-      expect(fieldsPoints(2)).toEqual(1);
+    it('1 point when fields are 2', () => {
+      expect(getFieldsPoints({ ...baseState, fields: 2 })).toEqual(1);
     });
-    it('should return 2 when a value of 3 is passed', () => {
-      expect(fieldsPoints(3)).toEqual(2);
+    it('2 points when fields are 3', () => {
+      expect(getFieldsPoints({ ...baseState, fields: 3 })).toEqual(2);
     });
-    it('should return 3 when a value of 4 is passed', () => {
-      expect(fieldsPoints(4)).toEqual(3);
+    it('3 points when fields are 4', () => {
+      expect(getFieldsPoints({ ...baseState, fields: 4 })).toEqual(3);
     });
-    it('should return 4 when a value greater than 4 is passed', () => {
-      expect(fieldsPoints(bigInt)).toEqual(4);
+    it('4 points when fields are more than 4', () => {
+      expect(getFieldsPoints({ ...baseState, fields: BIG_INT })).toEqual(4);
     });
   });
 
-  describe('Test pastures and vegetables scoring function', () => {
-    it('should return -1 when no parameters or numbers lower than 1 are passed', () => {
-      expect(pasturesVegetablesPoints()).toEqual(-1);
-      expect(pasturesVegetablesPoints(0)).toEqual(-1);
+  describe('Pastures and vegetables scoring function', () => {
+    it('-1 point when numbers lower than 1 are passed', () => {
+      expect(getPasturesPoints({ ...baseState, pastures: 0 })).toEqual(-1);
+      expect(getVegetablesPoints({ ...baseState, vegetables: 0 })).toEqual(-1);
     });
-    it('should return 1 when a value of 1 is passed', () => {
-      expect(pasturesVegetablesPoints(1)).toEqual(1);
+    it('1 point when a value of 1 is passed', () => {
+      expect(getPasturesPoints({ ...baseState, pastures: 1 })).toEqual(1);
+      expect(getVegetablesPoints({ ...baseState, vegetables: 1 })).toEqual(1);
     });
-    it('should return 2 when a value of 2 is passed', () => {
-      expect(pasturesVegetablesPoints(2)).toEqual(2);
+    it('2 points when a value of 2 is passed', () => {
+      expect(getPasturesPoints({ ...baseState, pastures: 2 })).toEqual(2);
+      expect(getVegetablesPoints({ ...baseState, vegetables: 2 })).toEqual(2);
     });
-    it('should return 3 when a value of 3 is passed', () => {
-      expect(pasturesVegetablesPoints(3)).toEqual(3);
+    it('3 points when a value of 3 is passed', () => {
+      expect(getPasturesPoints({ ...baseState, pastures: 3 })).toEqual(3);
+      expect(getVegetablesPoints({ ...baseState, vegetables: 3 })).toEqual(3);
     });
-    it('should return 4 when a value greater than 3 is passed', () => {
-      expect(pasturesVegetablesPoints(bigInt)).toEqual(4);
-    });
-  });
-
-  describe('Test grain and sheep scoring function', () => {
-    it('should return -1 when no parameters or numbers lower than 1 are passed', () => {
-      expect(grainSheepsPoints()).toEqual(-1);
-      expect(grainSheepsPoints(-1)).toEqual(-1);
-      expect(grainSheepsPoints(0)).toEqual(-1);
-    });
-    it('should return 1 when a value between 1 and 3 is passed', () => {
-      expect(grainSheepsPoints(1)).toEqual(1);
-      expect(grainSheepsPoints(2)).toEqual(1);
-      expect(grainSheepsPoints(3)).toEqual(1);
-    });
-    it('should return 2 when a value between 4 and 5 is passed', () => {
-      expect(grainSheepsPoints(4)).toEqual(2);
-      expect(grainSheepsPoints(5)).toEqual(2);
-    });
-    it('should return 3 when a value between 6 and 7 is is passed', () => {
-      expect(grainSheepsPoints(6)).toEqual(3);
-      expect(grainSheepsPoints(7)).toEqual(3);
-    });
-    it('should return 4 when a value greater than 7 is passed', () => {
-      expect(grainSheepsPoints(bigInt)).toEqual(4);
+    it('4 points when a value greater than 3 is passed', () => {
+      expect(getPasturesPoints({ ...baseState, pastures: BIG_INT })).toEqual(4);
+      expect(
+        getVegetablesPoints({ ...baseState, vegetables: BIG_INT })
+      ).toEqual(4);
     });
   });
 
-  describe('Test boarsPoints scoring function', () => {
-    it('should return -1 when no parameters or numbers lower than 1 are passed', () => {
-      expect(boarsPoints()).toEqual(-1);
-      expect(boarsPoints(-1)).toEqual(-1);
-      expect(boarsPoints(0)).toEqual(-1);
+  describe('grain and sheep scoring functions', () => {
+    it('-1 when grain or sheep quantities are lower than 1', () => {
+      expect(getSheepsPoints({ ...baseState, sheeps: 0 })).toEqual(-1);
+      expect(getGrainPoints({ ...baseState, grains: 0 })).toEqual(-1);
     });
-    it('should return 1 when a value between 1 and 2 is passed', () => {
-      expect(boarsPoints(1)).toEqual(1);
-      expect(boarsPoints(2)).toEqual(1);
+    it('1 when grain or sheep quantities are between 1 and 3', () => {
+      expect(getSheepsPoints({ ...baseState, sheeps: 1 })).toEqual(1);
+      expect(getGrainPoints({ ...baseState, grains: 1 })).toEqual(1);
+      expect(getSheepsPoints({ ...baseState, sheeps: 2 })).toEqual(1);
+      expect(getGrainPoints({ ...baseState, grains: 2 })).toEqual(1);
+      expect(getSheepsPoints({ ...baseState, sheeps: 3 })).toEqual(1);
+      expect(getGrainPoints({ ...baseState, grains: 3 })).toEqual(1);
     });
-    it('should return 2 when a value between 3 and 4 is passed', () => {
-      expect(boarsPoints(3)).toEqual(2);
-      expect(boarsPoints(4)).toEqual(2);
+    it('2 when grain or sheep quantities are between 4 and 5', () => {
+      expect(getSheepsPoints({ ...baseState, sheeps: 4 })).toEqual(2);
+      expect(getGrainPoints({ ...baseState, grains: 4 })).toEqual(2);
+      expect(getSheepsPoints({ ...baseState, sheeps: 5 })).toEqual(2);
+      expect(getGrainPoints({ ...baseState, grains: 5 })).toEqual(2);
     });
-    it('should return 3 when a value between 5 and 6 is is passed', () => {
-      expect(boarsPoints(5)).toEqual(3);
-      expect(boarsPoints(6)).toEqual(3);
+    it('3 when grain or sheep quantities are between 6 and 7', () => {
+      expect(getSheepsPoints({ ...baseState, sheeps: 6 })).toEqual(3);
+      expect(getGrainPoints({ ...baseState, grains: 6 })).toEqual(3);
+      expect(getSheepsPoints({ ...baseState, sheeps: 7 })).toEqual(3);
+      expect(getGrainPoints({ ...baseState, grains: 7 })).toEqual(3);
     });
-    it('should return 4 when a value greater than 6 is passed', () => {
-      expect(boarsPoints(bigInt)).toEqual(4);
+    it('4 when a quantity greater than 7 is passed', () => {
+      expect(getSheepsPoints({ ...baseState, sheeps: BIG_INT })).toEqual(4);
+      expect(getGrainPoints({ ...baseState, grains: BIG_INT })).toEqual(4);
     });
   });
 
-  describe('Test cattlesPoints scoring function', () => {
-    it('should return -1 when no parameters or numbers lower than 1 are passed', () => {
-      expect(cattlesPoints()).toEqual(-1);
-      expect(cattlesPoints(-1)).toEqual(-1);
-      expect(cattlesPoints(0)).toEqual(-1);
+  describe('Test getBoarsPoints scoring function', () => {
+    it('-1 point when boars are less than 1', () => {
+      expect(getBoarsPoints({ ...baseState, boars: -1 })).toEqual(-1);
+      expect(getBoarsPoints({ ...baseState, boars: 0 })).toEqual(-1);
     });
-    it('should return 1 when a value of 1 is passed', () => {
-      expect(cattlesPoints(1)).toEqual(1);
+    it('1 point when boars are between 1 and 2', () => {
+      expect(getBoarsPoints({ ...baseState, boars: 1 })).toEqual(1);
+      expect(getBoarsPoints({ ...baseState, boars: 2 })).toEqual(1);
     });
-    it('should return 2 when a value between 2 and 3 is passed', () => {
-      expect(cattlesPoints(2)).toEqual(2);
-      expect(cattlesPoints(3)).toEqual(2);
+    it('2 points when boars are between 3 and 4', () => {
+      expect(getBoarsPoints({ ...baseState, boars: 3 })).toEqual(2);
+      expect(getBoarsPoints({ ...baseState, boars: 4 })).toEqual(2);
     });
-    it('should return 3 when a value between 4 and 5 is is passed', () => {
-      expect(cattlesPoints(4)).toEqual(3);
-      expect(cattlesPoints(5)).toEqual(3);
+    it('3 points when boars are between 5 and 6', () => {
+      expect(getBoarsPoints({ ...baseState, boars: 5 })).toEqual(3);
+      expect(getBoarsPoints({ ...baseState, boars: 6 })).toEqual(3);
     });
-    it('should return 4 when a value greater than 5 is passed', () => {
-      expect(cattlesPoints(bigInt)).toEqual(4);
+    it('4 points when there are more than 6 boars', () => {
+      expect(getBoarsPoints({ ...baseState, boars: BIG_INT })).toEqual(4);
+    });
+  });
+
+  describe('Test getCattlesPoints scoring function', () => {
+    it('-1 point when cattles quantity is less than 1', () => {
+      expect(getCattlesPoints({ ...baseState, cattles: -1 })).toEqual(-1);
+      expect(getCattlesPoints({ ...baseState, cattles: 0 })).toEqual(-1);
+    });
+    it('1 point when there is 1 cattle', () => {
+      expect(getCattlesPoints({ ...baseState, cattles: 1 })).toEqual(1);
+    });
+    it('2 points when cattles are between 2 and 3', () => {
+      expect(getCattlesPoints({ ...baseState, cattles: 2 })).toEqual(2);
+      expect(getCattlesPoints({ ...baseState, cattles: 3 })).toEqual(2);
+    });
+    it('3 points when cattles are between 4 and 5', () => {
+      expect(getCattlesPoints({ ...baseState, cattles: 4 })).toEqual(3);
+      expect(getCattlesPoints({ ...baseState, cattles: 5 })).toEqual(3);
+    });
+    it('4 points when cattles are bigger than 5', () => {
+      expect(getCattlesPoints({ ...baseState, cattles: BIG_INT })).toEqual(4);
     });
   });
 
   describe('Test unused spaces scoring function', () => {
-    it('should return the parameter inverted', () => {
-      const unusedSpaces = 3;
-      expect(unusedSpacesPoints({ unusedSpaces })).toEqual(-3);
+    it('the points parameter inverted', () => {
+      expect(getUnusedSpacesPoints({ ...baseState, unusedSpaces: 3 })).toEqual(
+        -3
+      );
     });
   });
 
   describe('Test beggar cards scoring function', () => {
-    it('should return the parameter inverted and multiplied by 3', () => {
-      const beggarCards = 3;
-      expect(beggarCardsPoints({ beggarCards })).toEqual(-9);
+    it('the points parameter inverted and multiplied by 3', () => {
+      expect(getBeggarCardsPoints({ ...baseState, beggarCards: 3 })).toEqual(
+        -9
+      );
     });
   });
 
   describe('Test family members scoring function', () => {
-    it('should return the parameter multiplied by 3', () => {
-      const familyMembers = 3;
-      expect(familyMembersPoints({ familyMembers })).toEqual(9);
+    it('the points parameter multiplied by 3', () => {
+      expect(
+        getFamilyMembersPoints({ ...baseState, familyMembers: 3 })
+      ).toEqual(9);
     });
   });
 
   describe('Test bonus points scoring function', () => {
-    it('should return the parameter', () => {
-      expect(bonusPoints({ bonusPoints: 3 })).toEqual(3);
+    it('the points parameter', () => {
+      expect(getBonusPoints({ ...baseState, bonusPoints: 3 })).toEqual(3);
     });
   });
 
   describe('Test card points scoring function', () => {
-    it('should return the parameter', () => {
-      expect(cardPoints({ cardPoints: 3 })).toEqual(3);
+    it('the points parameter', () => {
+      expect(getCardsPoints({ ...baseState, cardPoints: 3 })).toEqual(3);
     });
   });
 
   describe('Test fenced stables scoring function', () => {
-    it('should return the parameter', () => {
-      const fencedStables = 3;
-      expect(fencedStablesPoints({ fencedStables })).toEqual(3);
+    it('the points parameter', () => {
+      expect(
+        getFencedStablesPoints({ ...baseState, fencedStables: 3 })
+      ).toEqual(3);
     });
   });
 
-  describe('Test clay romms scoring function', () => {
-    it('should return the parameter', () => {
-      const clayRooms = 3;
-      expect(clayRoomsPoints({ clayRooms })).toEqual(3);
+  describe('Test clay rooms scoring function', () => {
+    it('the points parameter', () => {
+      expect(getClayRoomsPoints({ ...baseState, clayRooms: 3 })).toEqual(3);
     });
   });
 
-  describe('Test stone romms scoring function', () => {
-    it('should return the parameter multiplied by 2', () => {
-      const stoneRooms = 3;
-      expect(stoneRoomsPoints({ stoneRooms })).toEqual(6);
+  describe('Test stone rooms scoring function', () => {
+    it('the points parameter multiplied by 2', () => {
+      expect(getStoneRoomsPoints({ ...baseState, stoneRooms: 3 })).toEqual(6);
+    });
+  });
+
+  describe('Partial Scores', () => {
+    it('AnimalPoints', () => {
+      expect(getAnimalsPoints.resultFunc(1, 2, 3)).toEqual(6);
+    });
+    it('CropsPoints', () => {
+      expect(getCropsPoints.resultFunc(1, 2)).toEqual(3);
     });
   });
 
   describe('Test the total scoring result', () => {
-    it('should return the sum of every point function', () => {
+    it('the points sum of every point function', () => {
       expect(
         getTotalPoints.resultFunc(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
       ).toEqual(12);
