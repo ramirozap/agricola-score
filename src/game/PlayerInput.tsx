@@ -1,21 +1,31 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import * as gameActions from './gameActions';
+import {
+  GameState,
+  GameAction,
+  Color,
+  Player,
+  AddPlayerAction
+} from './gameTypes';
 import PlayerList from './PlayerList';
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
-const PlayerInput: React.SFC<any> = props => {
+interface PlayerInputProps {
+  players: Player[];
+  colors: Color[];
+  addPlayer(playerName: string, color: Color): AddPlayerAction;
+}
+
+const PlayerInput: React.SFC<PlayerInputProps> = ({
+  players,
+  colors,
+  addPlayer
+}) => {
   const [playerName, setPlayerName] = useState('');
-  const [availableColors, setAvailableColors] = useState([
-    'blue',
-    'red',
-    'purple',
-    'green',
-    'white'
-  ]);
-  const [selectedColor, setSelectedColor] = useState('blue');
+  const [selectedColor, setSelectedColor] = useState(colors[0]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(event.target.value);
@@ -23,10 +33,17 @@ const PlayerInput: React.SFC<any> = props => {
   const selectColor = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedColor(event.target.value);
   };
-  const addPlayer = () => {
-    props.addPlayer(playerName, selectedColor);
+
+  const savePlayer = () => {
+    addPlayer(playerName, selectedColor);
+
     setPlayerName('');
   };
+
+  useEffect(() => {
+    setSelectedColor(colors[0]);
+  }, [colors.length]);
+
   return (
     <div>
       <input type="text" value={playerName} onChange={handleChange} />
@@ -34,10 +51,10 @@ const PlayerInput: React.SFC<any> = props => {
         name=""
         id="color-select"
         onChange={selectColor}
-        disabled={availableColors.length === 0}
+        disabled={colors.length === 0}
         defaultValue={selectedColor}
       >
-        {availableColors.map((color, i) => {
+        {colors.map((color: Color) => {
           return (
             <option value={color} key={color}>
               {color}
@@ -46,26 +63,27 @@ const PlayerInput: React.SFC<any> = props => {
         })}
       </select>
       <button
-        onClick={addPlayer}
+        onClick={savePlayer}
         type="button"
-        disabled={props.players && props.players.length >= 5}
+        disabled={players && players.length >= 5}
       >
         Add Player
       </button>
-      <PlayerList players={props.players} />
+      <PlayerList players={players} />
     </div>
   );
 };
 
-function mapStateToProps(state: any) {
+const mapStateToProps = (state: GameState) => {
   return {
-    players: state.players
+    players: state.players,
+    colors: state.colors
   };
-}
+};
 
-function mapDispatchToProps(dispatch: any) {
+const mapDispatchToProps = (dispatch: Dispatch<GameAction>) => {
   return bindActionCreators(gameActions, dispatch);
-}
+};
 
 export default connect(
   mapStateToProps,

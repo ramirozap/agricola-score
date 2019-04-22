@@ -5,10 +5,14 @@ export interface AddPlayerAction {
 
 export interface RemovePlayerAction {
   type: 'REMOVE_PLAYER';
-  payload: { playerPosition: number };
+  payload: { playerPosition: number; color: string };
 }
 
-export type GameAction = RemovePlayerAction | AddPlayerAction;
+type DefaultAction = {
+  type: 'DEFAULT';
+};
+
+export type GameAction = RemovePlayerAction | AddPlayerAction | DefaultAction;
 
 export interface Quantities {
   beggarCards: number;
@@ -31,9 +35,12 @@ export interface Quantities {
 export interface Player {
   name: string;
   color: string;
-  quantities?: Quantities;
+  quantities: Quantities;
 }
+
+export type Color = string;
 
 export interface GameState {
   players: Player[];
+  colors: Color[];
 }
