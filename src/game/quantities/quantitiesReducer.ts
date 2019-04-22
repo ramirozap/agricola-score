@@ -1,5 +1,4 @@
 import { Quantities, QuantityActions } from './quantitiesTypes';
-import { AddPlayerAction } from '../gameTypes';
 import { DeepReadonly } from 'deep-freeze';
 
 export const defaultQuantities: DeepReadonly<Quantities> = {

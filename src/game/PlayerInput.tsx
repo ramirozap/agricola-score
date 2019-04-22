@@ -42,7 +42,7 @@ const PlayerInput: React.SFC<PlayerInputProps> = ({
 
   useEffect(() => {
     setSelectedColor(colors[0]);
-  }, [colors.length]);
+  }, [colors]);
 
   return (
     <div>
