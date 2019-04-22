@@ -4,28 +4,11 @@ import deepFreeze from 'deep-freeze';
 import {
   Player,
   AddPlayerAction,
-  Quantities,
   RemovePlayerAction,
   Color
 } from './gameTypes';
 
-const defaultQuantities: Quantities = {
-  beggarCards: 0,
-  boars: 0,
-  bonusPoints: 0,
-  cardPoints: 0,
-  cattles: 0,
-  clayRooms: 0,
-  familyMembers: 2,
-  fencedStables: 0,
-  fields: 0,
-  grains: 0,
-  sheeps: 0,
-  pastures: 0,
-  stoneRooms: 0,
-  unusedSpaces: 0,
-  vegetables: 0
-};
+import { defaultQuantities } from './quantities/quantitiesReducer';
 
 describe('Player Reducer', () => {
   it('ADD_PLAYER action', () => {
@@ -36,11 +19,10 @@ describe('Player Reducer', () => {
         color: 'blue'
       }
     };
-    expect(players(undefined, addPlayerAction)).toEqual([
+    expect(players(undefined, addPlayerAction)).toMatchObject([
       {
         name: 'ramiro',
-        color: 'blue',
-        quantities: defaultQuantities
+        color: 'blue'
       }
     ]);
   });

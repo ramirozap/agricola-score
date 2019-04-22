@@ -1,4 +1,4 @@
-import { Quantities } from './gameTypes';
+import { Quantities } from './quantitiesTypes';
 import {
   getBeggarCardsPoints,
   getBoarsPoints,
@@ -12,12 +12,10 @@ import {
   getTotalPoints,
   getSheepsPoints,
   getPasturesPoints,
-  getAnimalsPoints,
   getGrainPoints,
   getVegetablesPoints,
   getUnusedSpacesPoints,
-  getStoneRoomsPoints,
-  getCropsPoints
+  getStoneRoomsPoints
 } from './pointSelectors';
 
 const BIG_INT: number = 99999;
@@ -214,15 +212,6 @@ describe('Scoring functions: ', () => {
   describe('Test stone rooms scoring function', () => {
     it('the points parameter multiplied by 2', () => {
       expect(getStoneRoomsPoints({ ...baseState, stoneRooms: 3 })).toEqual(6);
-    });
-  });
-
-  describe('Partial Scores', () => {
-    it('AnimalPoints', () => {
-      expect(getAnimalsPoints.resultFunc(1, 2, 3)).toEqual(6);
-    });
-    it('CropsPoints', () => {
-      expect(getCropsPoints.resultFunc(1, 2)).toEqual(3);
     });
   });
 
