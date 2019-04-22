@@ -1,4 +1,4 @@
-import { AddPlayerAction, RemovePlayerAction } from './gameTypes';
+import { AddPlayerAction, RemovePlayerAction, Color } from './gameTypes';
 
 export function addPlayer(playerName: string, color: string): AddPlayerAction {
   return {
@@ -10,9 +10,12 @@ export function addPlayer(playerName: string, color: string): AddPlayerAction {
   };
 }
 
-export function removePlayer(playerPosition: number): RemovePlayerAction {
+export function removePlayer(
+  playerPosition: number,
+  color: Color
+): RemovePlayerAction {
   return {
     type: 'REMOVE_PLAYER',
-    payload: { playerPosition }
+    payload: { playerPosition, color }
   };
 }

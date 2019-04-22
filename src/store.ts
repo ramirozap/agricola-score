@@ -1,10 +1,12 @@
 import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import gameReducers from './game/gameReducers';
+import { players, colors } from './game/gameReducers';
 
 const rootReducer = combineReducers({
-  players: gameReducers
-});
+  players: players,
+  colors: colors
+} as any);
+//todo investigate bug in redux
 const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;
