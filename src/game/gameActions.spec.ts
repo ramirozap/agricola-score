@@ -1,7 +1,7 @@
 import { addPlayer, removePlayer } from './gameActions';
 
 describe('Test Game Actions', () => {
-  it('should create an action to add a player to the current game', () => {
+  it('action to add a player to the current game', () => {
     const playerName = 'ramirozap';
     const color = 'blue';
     const expectedAction = {
@@ -10,7 +10,7 @@ describe('Test Game Actions', () => {
     };
     expect(addPlayer(playerName, color)).toEqual(expectedAction);
   });
-  it('should create an action to remove a player', () => {
+  it('action to remove a player', () => {
     const playerPosition = 0;
     const color = 'blue';
     const expectedAction = {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import * as gameActions from './gameActions';
 import {
   GameState,
