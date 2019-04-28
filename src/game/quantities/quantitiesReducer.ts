@@ -4,8 +4,8 @@ import { DeepReadonly } from 'deep-freeze';
 export const defaultQuantities: DeepReadonly<Quantities> = {
   beggarCards: 0,
   boars: 0,
-  bonusPoints: 0,
-  cardPoints: 0,
+  bonus: 0,
+  cards: 0,
   cattles: 0,
   clayRooms: 0,
   familyMembers: 2,

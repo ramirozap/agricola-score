@@ -1,28 +1,32 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { bindActionCreators, Dispatch, ActionCreator } from 'redux';
 import * as gameActions from './gameActions';
 import {
   GameState,
   GameAction,
   Color,
   Player,
-  AddPlayerAction
+  AddPlayerAction,
+  RemovePlayerAction
 } from './gameTypes';
 import PlayerList from './PlayerList';
+import { Link } from 'react-router-dom';
 
 const { useState, useEffect } = React;
 
-interface PlayerInputProps {
+interface Props {
   players: Player[];
   colors: Color[];
-  addPlayer(playerName: string, color: Color): AddPlayerAction;
+  addPlayer: ActionCreator<AddPlayerAction>;
+  removePlayer: ActionCreator<RemovePlayerAction>;
 }
 
-const PlayerInput: React.SFC<PlayerInputProps> = ({
+const PlayerInput: React.SFC<Props> = ({
   players,
   colors,
-  addPlayer
+  addPlayer,
+  removePlayer
 }) => {
   const [playerName, setPlayerName] = useState('');
   const [selectedColor, setSelectedColor] = useState(colors[0]);
@@ -69,7 +73,8 @@ const PlayerInput: React.SFC<PlayerInputProps> = ({
       >
         Add Player
       </button>
-      <PlayerList players={players} />
+      <PlayerList players={players} removePlayer={removePlayer} />
+      <Link to="/points/fields">cattles</Link>
     </div>
   );
 };

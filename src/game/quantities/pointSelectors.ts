@@ -1,21 +1,21 @@
-import { createSelector } from 'reselect';
-import { Quantities } from './quantitiesTypes';
+import { createSelector, OutputSelector } from 'reselect';
+import { Quantities, QuantitiesKeys } from './quantitiesTypes';
 import {
-  Fields,
-  Pastures,
-  Grains,
-  Vegetables,
-  Sheeps,
-  Boars,
-  Cattles,
-  UnusedSpaces,
-  FencedStables,
-  ClayRooms,
-  StoneRooms,
-  FamilyMembers,
-  BonusPoints,
-  CardPoints,
-  BeggarCards
+  beggarCards,
+  fields,
+  pastures,
+  grains,
+  vegetables,
+  sheeps,
+  boars,
+  cattles,
+  unusedSpaces,
+  fencedStables,
+  clayRooms,
+  stoneRooms,
+  familyMembers,
+  bonus,
+  cards
 } from './quantitiesSelectors';
 
 const fieldsPoints = (fields: Quantities['fields']) => {
@@ -91,7 +91,7 @@ const cattlesPoints = (cattles: Quantities['cattles']) => {
 };
 
 const unusedSpacesPoints = (unusedSpaces: Quantities['unusedSpaces']) =>
-  unusedSpaces * -1;
+  unusedSpaces > 0 ? unusedSpaces * -1 : 0;
 
 const identity = (quantity: number) => quantity;
 
@@ -108,77 +108,77 @@ const sum = (...args: number[]) =>
   args.reduce((prev: number, current: number) => current + prev, 0);
 
 export const getFieldsPoints = createSelector(
-  Fields,
+  fields,
   fieldsPoints
 );
 
 export const getPasturesPoints = createSelector(
-  Pastures,
+  pastures,
   pasturesVegetablesPoints
 );
 
-export const getGrainPoints = createSelector(
-  Grains,
+export const getGrainsPoints = createSelector(
+  grains,
   grainSheepsPoints
 );
 
 export const getVegetablesPoints = createSelector(
-  Vegetables,
+  vegetables,
   pasturesVegetablesPoints
 );
 
 export const getSheepsPoints = createSelector(
-  Sheeps,
+  sheeps,
   grainSheepsPoints
 );
 
 export const getBoarsPoints = createSelector(
-  Boars,
+  boars,
   boarsPoints
 );
 
 export const getCattlesPoints = createSelector(
-  Cattles,
+  cattles,
   cattlesPoints
 );
 
 export const getUnusedSpacesPoints = createSelector(
-  UnusedSpaces,
+  unusedSpaces,
   unusedSpacesPoints
 );
 
 export const getFencedStablesPoints = createSelector(
-  FencedStables,
+  fencedStables,
   identity
 );
 
 export const getClayRoomsPoints = createSelector(
-  ClayRooms,
+  clayRooms,
   identity
 );
 
 export const getStoneRoomsPoints = createSelector(
-  StoneRooms,
+  stoneRooms,
   stoneRoomsPoints
 );
 
 export const getFamilyMembersPoints = createSelector(
-  FamilyMembers,
+  familyMembers,
   familyMembersPoints
 );
 
 export const getBonusPoints = createSelector(
-  BonusPoints,
+  bonus,
   identity
 );
 
 export const getCardsPoints = createSelector(
-  CardPoints,
+  cards,
   identity
 );
 
 export const getBeggarCardsPoints = createSelector(
-  BeggarCards,
+  beggarCards,
   beggarCardsPoints
 );
 
@@ -186,7 +186,7 @@ export const getTotalPoints = createSelector(
   [
     getFieldsPoints,
     getPasturesPoints,
-    getGrainPoints,
+    getGrainsPoints,
     getVegetablesPoints,
     getSheepsPoints,
     getBoarsPoints,
@@ -202,3 +202,36 @@ export const getTotalPoints = createSelector(
   ],
   sum
 );
+
+interface ICalcFunctions {
+  [key: string]: OutputSelector<Quantities, number, (res: number) => number>;
+}
+
+const calcFunctions: ICalcFunctions = {
+  getFieldsPoints,
+  getPasturesPoints,
+  getGrainsPoints,
+  getVegetablesPoints,
+  getSheepsPoints,
+  getBoarsPoints,
+  getCattlesPoints,
+  getUnusedSpacesPoints,
+  getFencedStablesPoints,
+  getClayRoomsPoints,
+  getStoneRoomsPoints,
+  getFamilyMembersPoints,
+  getBonusPoints,
+  getCardsPoints,
+  getBeggarCardsPoints
+};
+
+const capitalize = (type: string) => {
+  return type.charAt(0).toUpperCase() + type.slice(1);
+};
+
+export const getTypePoints = (
+  state: Quantities,
+  type: QuantitiesKeys
+): number => {
+  return calcFunctions[`get${capitalize(type)}Points`](state);
+};

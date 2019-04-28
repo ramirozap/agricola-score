@@ -12,7 +12,7 @@ import {
   getTotalPoints,
   getSheepsPoints,
   getPasturesPoints,
-  getGrainPoints,
+  getGrainsPoints,
   getVegetablesPoints,
   getUnusedSpacesPoints,
   getStoneRoomsPoints
@@ -26,8 +26,8 @@ describe('Scoring functions: ', () => {
     baseState = {
       beggarCards: 0,
       boars: 0,
-      bonusPoints: 0,
-      cardPoints: 0,
+      bonus: 0,
+      cards: 0,
       cattles: 0,
       clayRooms: 0,
       familyMembers: 0,
@@ -88,31 +88,31 @@ describe('Scoring functions: ', () => {
   describe('grain and sheep scoring functions', () => {
     it('-1 when grain or sheep quantities are lower than 1', () => {
       expect(getSheepsPoints({ ...baseState, sheeps: 0 })).toEqual(-1);
-      expect(getGrainPoints({ ...baseState, grains: 0 })).toEqual(-1);
+      expect(getGrainsPoints({ ...baseState, grains: 0 })).toEqual(-1);
     });
     it('1 when grain or sheep quantities are between 1 and 3', () => {
       expect(getSheepsPoints({ ...baseState, sheeps: 1 })).toEqual(1);
-      expect(getGrainPoints({ ...baseState, grains: 1 })).toEqual(1);
+      expect(getGrainsPoints({ ...baseState, grains: 1 })).toEqual(1);
       expect(getSheepsPoints({ ...baseState, sheeps: 2 })).toEqual(1);
-      expect(getGrainPoints({ ...baseState, grains: 2 })).toEqual(1);
+      expect(getGrainsPoints({ ...baseState, grains: 2 })).toEqual(1);
       expect(getSheepsPoints({ ...baseState, sheeps: 3 })).toEqual(1);
-      expect(getGrainPoints({ ...baseState, grains: 3 })).toEqual(1);
+      expect(getGrainsPoints({ ...baseState, grains: 3 })).toEqual(1);
     });
     it('2 when grain or sheep quantities are between 4 and 5', () => {
       expect(getSheepsPoints({ ...baseState, sheeps: 4 })).toEqual(2);
-      expect(getGrainPoints({ ...baseState, grains: 4 })).toEqual(2);
+      expect(getGrainsPoints({ ...baseState, grains: 4 })).toEqual(2);
       expect(getSheepsPoints({ ...baseState, sheeps: 5 })).toEqual(2);
-      expect(getGrainPoints({ ...baseState, grains: 5 })).toEqual(2);
+      expect(getGrainsPoints({ ...baseState, grains: 5 })).toEqual(2);
     });
     it('3 when grain or sheep quantities are between 6 and 7', () => {
       expect(getSheepsPoints({ ...baseState, sheeps: 6 })).toEqual(3);
-      expect(getGrainPoints({ ...baseState, grains: 6 })).toEqual(3);
+      expect(getGrainsPoints({ ...baseState, grains: 6 })).toEqual(3);
       expect(getSheepsPoints({ ...baseState, sheeps: 7 })).toEqual(3);
-      expect(getGrainPoints({ ...baseState, grains: 7 })).toEqual(3);
+      expect(getGrainsPoints({ ...baseState, grains: 7 })).toEqual(3);
     });
     it('4 when a quantity greater than 7 is passed', () => {
       expect(getSheepsPoints({ ...baseState, sheeps: BIG_INT })).toEqual(4);
-      expect(getGrainPoints({ ...baseState, grains: BIG_INT })).toEqual(4);
+      expect(getGrainsPoints({ ...baseState, grains: BIG_INT })).toEqual(4);
     });
   });
 
@@ -159,10 +159,15 @@ describe('Scoring functions: ', () => {
     });
   });
 
-  describe('Test unused spaces scoring function', () => {
+  describe('unused spaces scoring', () => {
     it('the points parameter inverted', () => {
       expect(getUnusedSpacesPoints({ ...baseState, unusedSpaces: 3 })).toEqual(
         -3
+      );
+    });
+    it('the result should be always negative or 0', () => {
+      expect(getUnusedSpacesPoints({ ...baseState, unusedSpaces: -6 })).toEqual(
+        0
       );
     });
   });
@@ -185,13 +190,13 @@ describe('Scoring functions: ', () => {
 
   describe('Test bonus points scoring function', () => {
     it('the points parameter', () => {
-      expect(getBonusPoints({ ...baseState, bonusPoints: 3 })).toEqual(3);
+      expect(getBonusPoints({ ...baseState, bonus: 3 })).toEqual(3);
     });
   });
 
   describe('Test card points scoring function', () => {
     it('the points parameter', () => {
-      expect(getCardsPoints({ ...baseState, cardPoints: 3 })).toEqual(3);
+      expect(getCardsPoints({ ...baseState, cards: 3 })).toEqual(3);
     });
   });
 
