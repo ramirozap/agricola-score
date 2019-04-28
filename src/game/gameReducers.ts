@@ -14,6 +14,14 @@ export const players = (state = defaultPlayers, action: GameAction) => {
       return [...state, player];
     case 'REMOVE_PLAYER':
       return state.filter(player => player.color !== action.payload.color);
+    case 'INCREMENT_QUANTITY':
+    case 'DECREMENT_QUANTITY':
+    case 'SET_QUANTITY':
+      return state.map(player =>
+        player.color === action.payload.color
+          ? { ...player, quantities: quantities(player.quantities, action) }
+          : player
+      );
     default:
       return state;
   }

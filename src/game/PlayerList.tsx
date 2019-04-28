@@ -1,11 +1,12 @@
 import React from 'react';
+import { Player, Color } from './gameTypes';
 
-interface Player {
-  color: string;
-  name: string;
-}
+type Props = {
+  players: Player[];
+  removePlayer: (color: Color) => void;
+};
 
-const PlayerList = ({ players }: { players: Player[] }) => {
+const PlayerList = ({ players, removePlayer }: Props) => {
   if (!players || !players.length) {
     return <span>'Add a player'</span>;
   }
@@ -13,8 +14,9 @@ const PlayerList = ({ players }: { players: Player[] }) => {
   return (
     <ul>
       {players.map(({ color, name }: Player) => (
-        <li key={color + name}>
-          {name} - {color}
+        <li key={color}>
+          {name} - {color}{' '}
+          <button onClick={() => removePlayer(color)}>X</button>
         </li>
       ))}
     </ul>

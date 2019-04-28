@@ -1,10 +1,10 @@
-import { AddPlayerAction } from '../gameTypes';
+import { AddPlayerAction, Color } from '../gameTypes';
 
 export interface Quantities {
   readonly beggarCards: number;
   readonly boars: number;
-  readonly bonusPoints: number;
-  readonly cardPoints: number;
+  readonly bonus: number;
+  readonly cards: number;
   readonly cattles: number;
   readonly clayRooms: number;
   readonly familyMembers: number;
@@ -18,36 +18,39 @@ export interface Quantities {
   readonly vegetables: number;
 }
 
-export type QuantitiesKeys =
-  | 'beggarCards'
-  | 'boars'
-  | 'bonusPoints'
-  | 'cardPoints'
-  | 'cattles'
-  | 'clayRooms'
-  | 'familyMembers'
-  | 'fencedStables'
-  | 'fields'
-  | 'grains'
-  | 'sheeps'
-  | 'pastures'
-  | 'stoneRooms'
-  | 'unusedSpaces'
-  | 'vegetables';
+export interface QuantitiesSelectors {
+  readonly beggarCards: (state: Quantities) => Quantities['beggarCards'];
+  readonly boars: (state: Quantities) => Quantities['boars'];
+  readonly bonus: (state: Quantities) => Quantities['bonus'];
+  readonly cards: (state: Quantities) => Quantities['cards'];
+  readonly cattles: (state: Quantities) => Quantities['cattles'];
+  readonly clayRooms: (state: Quantities) => Quantities['clayRooms'];
+  readonly familyMembers: (state: Quantities) => Quantities['familyMembers'];
+  readonly fencedStables: (state: Quantities) => Quantities['fencedStables'];
+  readonly fields: (state: Quantities) => Quantities['fields'];
+  readonly grains: (state: Quantities) => Quantities['grains'];
+  readonly sheeps: (state: Quantities) => Quantities['sheeps'];
+  readonly pastures: (state: Quantities) => Quantities['pastures'];
+  readonly stoneRooms: (state: Quantities) => Quantities['stoneRooms'];
+  readonly unusedSpaces: (state: Quantities) => Quantities['unusedSpaces'];
+  readonly vegetables: (state: Quantities) => Quantities['vegetables'];
+}
+
+export type QuantitiesKeys = keyof QuantitiesSelectors;
 
 export interface IncrementQuantityAction {
   type: 'INCREMENT_QUANTITY';
-  payload: { key: QuantitiesKeys };
+  payload: { key: QuantitiesKeys; color: Color };
 }
 
 export interface DecrementQuantityAction {
   type: 'DECREMENT_QUANTITY';
-  payload: { key: QuantitiesKeys };
+  payload: { key: QuantitiesKeys; color: Color };
 }
 
 export interface SetQuantityAction {
   type: 'SET_QUANTITY';
-  payload: { key: QuantitiesKeys; newQuantity: number };
+  payload: { key: QuantitiesKeys; newQuantity: number; color: Color };
 }
 
 export type QuantityActions =

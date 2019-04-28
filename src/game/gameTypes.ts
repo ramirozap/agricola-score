@@ -1,4 +1,4 @@
-import { Quantities } from './quantities/quantitiesTypes';
+import { Quantities, QuantityActions } from './quantities/quantitiesTypes';
 
 export interface AddPlayerAction {
   type: 'ADD_PLAYER';
@@ -19,7 +19,11 @@ export interface GenericAction {
   payload?: { [key: string]: any };
 }
 
-export type GameAction = RemovePlayerAction | AddPlayerAction | DefaultAction;
+export type GameAction =
+  | RemovePlayerAction
+  | AddPlayerAction
+  | QuantityActions
+  | DefaultAction;
 
 export interface Player {
   name: string;
