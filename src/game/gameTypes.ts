@@ -7,7 +7,7 @@ export interface AddPlayerAction {
 
 export interface RemovePlayerAction {
   type: 'REMOVE_PLAYER';
-  payload: { playerPosition: number; color: string };
+  payload: { color: string };
 }
 
 export type DefaultAction = {

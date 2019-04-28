@@ -13,10 +13,7 @@ export const players = (state = defaultPlayers, action: GameAction) => {
       };
       return [...state, player];
     case 'REMOVE_PLAYER':
-      return [
-        ...state.slice(0, action.payload.playerPosition),
-        ...state.slice(action.payload.playerPosition! + 1)
-      ];
+      return state.filter(player => player.color !== action.payload.color);
     default:
       return state;
   }
@@ -24,18 +21,18 @@ export const players = (state = defaultPlayers, action: GameAction) => {
 
 const defaultColors: ReadonlyArray<Color> = [
   'blue',
-  'red',
-  'purple',
   'green',
+  'purple',
+  'red',
   'white'
 ];
 
 export const colors = (state = defaultColors, action: GameAction) => {
   switch (action.type) {
     case 'ADD_PLAYER':
-      return [...state.filter(color => color !== action.payload.color)];
+      return state.filter(color => color !== action.payload.color);
     case 'REMOVE_PLAYER':
-      return [...state, action.payload.color];
+      return [...state, action.payload.color].sort();
     default:
       return state;
   }

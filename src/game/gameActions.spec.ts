@@ -11,12 +11,11 @@ describe('Test Game Actions', () => {
     expect(addPlayer(playerName, color)).toEqual(expectedAction);
   });
   it('action to remove a player', () => {
-    const playerPosition = 0;
     const color = 'blue';
     const expectedAction = {
       type: 'REMOVE_PLAYER',
-      payload: { playerPosition, color }
+      payload: { color }
     };
-    expect(removePlayer(playerPosition, color)).toEqual(expectedAction);
+    expect(removePlayer(color)).toEqual(expectedAction);
   });
 });

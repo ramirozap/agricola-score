@@ -37,7 +37,6 @@ describe('Player Reducer', () => {
     const removePlayerAction: RemovePlayerAction = {
       type: 'REMOVE_PLAYER',
       payload: {
-        playerPosition: 0,
         color: 'blue'
       }
     };
@@ -50,7 +49,7 @@ describe('Player Reducer', () => {
 describe('Colors reducer', () => {
   let defaultColors: ReadonlyArray<Color>;
   beforeEach(() => {
-    defaultColors = ['blue', 'red', 'purple', 'green', 'white'];
+    defaultColors = ['blue', 'green', 'purple', 'red', 'white'];
     deepFreeze(defaultColors);
   });
   it('DEFAULT', () => {
@@ -74,13 +73,14 @@ describe('Colors reducer', () => {
     const action: RemovePlayerAction = {
       type: 'REMOVE_PLAYER',
       payload: {
-        playerPosition: 0,
         color: 'blue'
       }
     };
     //remove 'blue' as if a player picked it before
     const currentState: ReadonlyArray<Color> = [...defaultColors.slice(1)];
     deepFreeze(currentState);
-    expect(colors(currentState, action)).toEqual([...currentState, 'blue']);
+    expect(colors(currentState, action)).toEqual(
+      [...currentState, 'blue'].sort()
+    );
   });
 });
