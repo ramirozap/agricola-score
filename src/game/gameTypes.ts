@@ -1,13 +1,16 @@
-import { Quantities, QuantityActions } from './quantities/quantitiesTypes';
+import {
+  QuantityActions,
+  PlayersQuantities
+} from './quantities/quantitiesTypes';
 
 export interface AddPlayerAction {
   type: 'ADD_PLAYER';
-  payload: { playerName: string; color: string };
+  payload: { playerName: string; color: Color };
 }
 
 export interface RemovePlayerAction {
   type: 'REMOVE_PLAYER';
-  payload: { color: string };
+  payload: { playerName: string; color: Color };
 }
 
 export type DefaultAction = {
@@ -28,12 +31,19 @@ export type GameAction =
 export interface Player {
   name: string;
   color: string;
-  quantities: Quantities;
 }
+
+export type Players = {
+  playersById: { [key: string]: Player };
+  allPlayers: string[];
+};
 
 export type Color = string;
 
-export interface GameState {
-  players: Player[];
-  colors: Color[];
+export interface RootState {
+  entities: {
+    colors: Color[];
+    players: Players;
+    quantities: PlayersQuantities;
+  };
 }

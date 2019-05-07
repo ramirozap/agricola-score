@@ -1,4 +1,8 @@
-import { Quantities, QuantityActions } from './quantitiesTypes';
+import {
+  Quantities,
+  QuantityActions,
+  PlayersQuantities
+} from './quantitiesTypes';
 import { DeepReadonly } from 'deep-freeze';
 
 export const defaultQuantities: DeepReadonly<Quantities> = {
@@ -19,7 +23,39 @@ export const defaultQuantities: DeepReadonly<Quantities> = {
   vegetables: 0
 };
 
-export const quantities = (
+const defaultState: PlayersQuantities = {};
+
+export const playersQuantities = (
+  state = defaultState,
+  action: QuantityActions
+) => {
+  switch (action.type) {
+    case 'INCREMENT_QUANTITY':
+    case 'DECREMENT_QUANTITY':
+    case 'SET_QUANTITY':
+      return {
+        ...state,
+        [action.payload.playerName]: {
+          ...quantity(state[action.payload.playerName], action)
+        }
+      };
+    case 'ADD_PLAYER':
+      return {
+        ...state,
+        [action.payload.playerName]: {
+          ...quantity(undefined, action)
+        }
+      };
+    case 'REMOVE_PLAYER':
+      let newState = { ...state };
+      delete newState[action.payload.playerName];
+      return newState;
+    default:
+      return state;
+  }
+};
+
+export const quantity = (
   state = defaultQuantities,
   action: QuantityActions
 ) => {

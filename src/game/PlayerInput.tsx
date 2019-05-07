@@ -1,25 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch, ActionCreator } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import * as gameActions from './gameActions';
-import {
-  GameState,
-  GameAction,
-  Color,
-  Player,
-  AddPlayerAction,
-  RemovePlayerAction
-} from './gameTypes';
+import { GameAction, Color, RootState, Players } from './gameTypes';
 import PlayerList from './PlayerList';
 import { Link } from 'react-router-dom';
+import { getColors, getPlayers } from './gameSelectors';
 
 const { useState, useEffect } = React;
 
 interface Props {
-  players: Player[];
+  players: Players;
   colors: Color[];
-  addPlayer: ActionCreator<AddPlayerAction>;
-  removePlayer: ActionCreator<RemovePlayerAction>;
+  addPlayer: typeof gameActions.addPlayer;
+  removePlayer: typeof gameActions.removePlayer;
 }
 
 const PlayerInput: React.SFC<Props> = ({
@@ -69,20 +63,20 @@ const PlayerInput: React.SFC<Props> = ({
       <button
         onClick={savePlayer}
         type="button"
-        disabled={players && players.length >= 5}
+        disabled={players && players.allPlayers.length >= 5}
       >
         Add Player
       </button>
       <PlayerList players={players} removePlayer={removePlayer} />
-      <Link to="/points/fields">cattles</Link>
+      <Link to="/points/fields">Start Game</Link>
     </div>
   );
 };
 
-const mapStateToProps = (state: GameState) => {
+const mapStateToProps = (state: RootState) => {
   return {
-    players: state.players,
-    colors: state.colors
+    players: getPlayers(state),
+    colors: getColors(state)
   };
 };
 

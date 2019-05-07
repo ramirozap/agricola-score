@@ -2,33 +2,37 @@ import { increment, decrement, setQuantity } from './quantitiesActions';
 import {
   IncrementQuantityAction,
   DecrementQuantityAction,
-  SetQuantityAction
+  SetQuantityAction,
+  QuantitiesKeys
 } from './quantitiesTypes';
 
 describe('Quantities Actions', () => {
+  let key: QuantitiesKeys;
+  let playerName: string;
+  beforeEach(() => {
+    key = 'cattles';
+    playerName = 'ramiro';
+  });
   it('action to increment a specific quantity', () => {
-    const key = 'cattles';
     const expectedAction: IncrementQuantityAction = {
       type: 'INCREMENT_QUANTITY',
-      payload: { key }
+      payload: { key, playerName }
     };
-    expect(increment(key)).toEqual(expectedAction);
+    expect(increment(key, playerName)).toEqual(expectedAction);
   });
   it('action to decrement a specific quantity', () => {
-    const key = 'cattles';
     const expectedAction: DecrementQuantityAction = {
       type: 'DECREMENT_QUANTITY',
-      payload: { key }
+      payload: { key, playerName }
     };
-    expect(decrement(key)).toEqual(expectedAction);
+    expect(decrement(key, playerName)).toEqual(expectedAction);
   });
   it('action to set a specific quantity', () => {
-    const key = 'cattles';
     const newQuantity = 10;
     const expectedAction: SetQuantityAction = {
       type: 'SET_QUANTITY',
-      payload: { key, newQuantity }
+      payload: { key, newQuantity, playerName }
     };
-    expect(setQuantity(key, newQuantity)).toEqual(expectedAction);
+    expect(setQuantity(key, newQuantity, playerName)).toEqual(expectedAction);
   });
 });
