@@ -7,3 +7,11 @@ body {
   display: grid;
   grid-template-columns: 1fr 50px 1fr 50px 1fr;
 }
+
+.grid header {
+  grid-template-columns: 1fr;
+}
+
+.grid footer {
+  grid-template-columns: 1fr;
+}

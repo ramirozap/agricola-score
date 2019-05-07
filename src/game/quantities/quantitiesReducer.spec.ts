@@ -1,50 +1,93 @@
-import { quantities, defaultQuantities } from './quantitiesReducer';
+import {
+  quantity,
+  defaultQuantities,
+  playersQuantities
+} from './quantitiesReducer';
 import {
   IncrementQuantityAction,
   Quantities,
   DecrementQuantityAction,
-  SetQuantityAction
+  SetQuantityAction,
+  PlayersQuantities
 } from './quantitiesTypes';
 import { DeepReadonly } from 'deep-freeze';
+import { AddPlayerAction, RemovePlayerAction } from '../gameTypes';
+import { sheeps } from './quantitiesSelectors';
 
 describe('Quantity Reducer', () => {
-  let defaultState: DeepReadonly<Quantities>;
+  let initialState: DeepReadonly<PlayersQuantities>;
+  let payload: { [key: string]: string };
   beforeEach(() => {
-    defaultState = defaultQuantities;
+    initialState = {
+      ramiro: {
+        ...defaultQuantities
+      }
+    };
+    payload = { key: 'cattles', playerName: 'ramiro' };
   });
+
+  it('add player', () => {
+    const addPlayer: AddPlayerAction = {
+      type: 'ADD_PLAYER',
+      payload: { playerName: 'ramiro', color: 'blue' }
+    };
+    const expectedState: PlayersQuantities = {
+      ramiro: { ...defaultQuantities }
+    };
+    expect(playersQuantities(undefined, addPlayer)).toEqual(expectedState);
+  });
+
+  it('add player', () => {
+    const addPlayer: RemovePlayerAction = {
+      type: 'REMOVE_PLAYER',
+      payload: { playerName: 'ramiro', color: 'blue' }
+    };
+    const expectedState: PlayersQuantities = {};
+    expect(playersQuantities(initialState, addPlayer)).toEqual(expectedState);
+  });
+
   it('increment', () => {
     const increment: IncrementQuantityAction = {
       type: 'INCREMENT_QUANTITY',
-      payload: { key: 'cattles' }
+      payload: { key: 'cattles', playerName: 'ramiro' }
     };
     const expectedState = {
-      ...defaultState,
-      cattles: defaultState.cattles + 1
+      ...initialState,
+      ramiro: {
+        ...defaultQuantities,
+        cattles: defaultQuantities.cattles + 1
+      }
     };
-    expect(quantities(defaultState, increment)).toEqual(expectedState);
+    expect(playersQuantities(initialState, increment)).toEqual(expectedState);
   });
   it('decrement', () => {
     const increment: DecrementQuantityAction = {
       type: 'DECREMENT_QUANTITY',
-      payload: { key: 'cattles' }
+      payload: { key: 'cattles', playerName: 'ramiro' }
     };
     const expectedState = {
-      ...defaultState,
-      cattles: defaultState.cattles - 1
+      ...initialState,
+      ramiro: {
+        ...defaultQuantities,
+        cattles: defaultQuantities.cattles - 1
+      }
     };
-    expect(quantities(defaultState, increment)).toEqual(expectedState);
+    expect(playersQuantities(initialState, increment)).toEqual(expectedState);
   });
 
   it('set quantity', () => {
     const newQuantity = 3;
     const increment: SetQuantityAction = {
       type: 'SET_QUANTITY',
-      payload: { key: 'cattles', newQuantity }
+      payload: { key: 'cattles', newQuantity, playerName: 'ramiro' }
     };
     const expectedState = {
-      ...defaultState,
-      cattles: newQuantity
+      ...initialState,
+      ramiro: {
+        ...defaultQuantities,
+        cattles: 3
+      }
     };
-    expect(quantities(defaultState, increment)).toEqual(expectedState);
+    expect(playersQuantities(initialState, increment)).toEqual(expectedState);
   });
 });

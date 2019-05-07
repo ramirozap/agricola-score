@@ -1,4 +1,4 @@
-import { AddPlayerAction, Color } from '../gameTypes';
+import { AddPlayerAction, Color, RemovePlayerAction } from '../gameTypes';
 
 export interface Quantities {
   readonly beggarCards: number;
@@ -38,23 +38,27 @@ export interface QuantitiesSelectors {
 
 export type QuantitiesKeys = keyof QuantitiesSelectors;
 
+export interface PlayersQuantities {
+  [key: string]: Quantities;
+}
 export interface IncrementQuantityAction {
   type: 'INCREMENT_QUANTITY';
-  payload: { key: QuantitiesKeys; color: Color };
+  payload: { key: QuantitiesKeys; playerName: string };
 }
 
 export interface DecrementQuantityAction {
   type: 'DECREMENT_QUANTITY';
-  payload: { key: QuantitiesKeys; color: Color };
+  payload: { key: QuantitiesKeys; playerName: string };
 }
 
 export interface SetQuantityAction {
   type: 'SET_QUANTITY';
-  payload: { key: QuantitiesKeys; newQuantity: number; color: Color };
+  payload: { key: QuantitiesKeys; newQuantity: number; playerName: string };
 }
 
 export type QuantityActions =
   | IncrementQuantityAction
   | DecrementQuantityAction
   | SetQuantityAction
-  | AddPlayerAction;
+  | AddPlayerAction
+  | RemovePlayerAction;

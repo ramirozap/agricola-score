@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link, match } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Player, GameState } from './gameTypes';
-import states from './states.constants';
+import { RootState, Players } from './gameTypes';
+import STATES from './states.constants';
 import { getTypePoints } from './quantities/pointSelectors';
-import * as quantityActions from './quantities/quantitiesActions';
+import * as quantitiesActions from './quantities/quantitiesActions';
 import {
   IncrementQuantityAction,
   DecrementQuantityAction,
   SetQuantityAction,
-  QuantitiesKeys
+  QuantitiesKeys,
+  PlayersQuantities
 } from './quantities/quantitiesTypes';
 import { bindActionCreators } from 'redux';
 import { Color } from 'csstype';
@@ -19,8 +20,9 @@ interface Match extends match {
 }
 
 type props = {
-  players: Player[];
+  players: Players;
   match: Match;
+  quantities: PlayersQuantities;
   increment: (
     pointType: QuantitiesKeys,
     color: Color
@@ -41,18 +43,19 @@ const PointSection = ({
   match,
   increment,
   decrement,
-  setQuantity
+  setQuantity,
+  quantities
 }: props) => {
   const { pointType } = match.params;
-  const { prevState, nextState, title } = states[pointType];
+  const { prevState, nextState, title } = STATES[pointType];
   const prevStateControls = prevState ? (
-    <Link to={states[prevState].url}>
-      <button type="button">{states[prevState].title}</button>
+    <Link to={STATES[prevState].url}>
+      <button type="button">{STATES[prevState].title}</button>
     </Link>
   ) : null;
   const nextStateControls = nextState ? (
-    <Link to={states[nextState].url}>
-      <button type="button">{states[nextState].title}</button>
+    <Link to={STATES[nextState].url}>
+      <button type="button">{STATES[nextState].title}</button>
     </Link>
   ) : null;
   return (
@@ -64,47 +67,48 @@ const PointSection = ({
         <div>Total</div>
         <div />
         <div>Points</div>
-        {players.map((player: Player) => {
-          const { color, name } = player;
+        {players.allPlayers.map(playerId => {
+          const { color, name } = players.playersById[playerId];
           return (
             <React.Fragment key={color}>
               <div>{name}</div>
               <div>
-                <button onClick={() => decrement(pointType, color)}>-</button>
+                <button onClick={() => decrement(pointType, name)}>-</button>
               </div>
               <div>
                 <input
                   type="number"
-                  value={player.quantities[pointType]}
+                  value={quantities[name][pointType]}
                   onChange={e =>
-                    setQuantity(pointType, parseInt(e.target.value) || 0, color)
+                    setQuantity(pointType, parseInt(e.target.value) || 0, name)
                   }
                 />
               </div>
               <div>
-                <button onClick={() => increment(pointType, color)}>+</button>
+                <button onClick={() => increment(pointType, name)}>+</button>
               </div>
-              <div>{getTypePoints(player.quantities, pointType)}</div>
+              <div>{getTypePoints(quantities[name], pointType)}</div>
             </React.Fragment>
           );
         })}
-        {prevStateControls}
-        {nextStateControls}
       </div>
+      {prevStateControls}
+      {nextStateControls}
     </div>
   );
 };
 
-const getPlayers = (state: GameState) => state.players;
+const getPlayers = (state: RootState) => state.entities.players;
 
-const mapStateToProps = (state: GameState) => {
+const mapStateToProps = (state: RootState) => {
   return {
-    players: getPlayers(state)
+    players: getPlayers(state),
+    quantities: state.entities.quantities
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
-  return bindActionCreators(quantityActions, dispatch);
+  return bindActionCreators(quantitiesActions, dispatch);
 };
 
 export default connect(

@@ -1,51 +1,6 @@
-import { players, colors } from './gameReducers';
+import { colors } from './colorsReducers';
 import deepFreeze from 'deep-freeze';
-
-import {
-  Player,
-  AddPlayerAction,
-  RemovePlayerAction,
-  Color
-} from './gameTypes';
-
-import { defaultQuantities } from './quantities/quantitiesReducer';
-
-describe('Player Reducer', () => {
-  it('ADD_PLAYER action', () => {
-    const addPlayerAction: AddPlayerAction = {
-      type: 'ADD_PLAYER',
-      payload: {
-        playerName: 'ramiro',
-        color: 'blue'
-      }
-    };
-    expect(players(undefined, addPlayerAction)).toMatchObject([
-      {
-        name: 'ramiro',
-        color: 'blue'
-      }
-    ]);
-  });
-  it('REMOVE_PLAYER', () => {
-    const initialState: Player[] = [
-      {
-        name: 'ramiro',
-        color: 'blue',
-        quantities: defaultQuantities
-      }
-    ];
-    const removePlayerAction: RemovePlayerAction = {
-      type: 'REMOVE_PLAYER',
-      payload: {
-        color: 'blue'
-      }
-    };
-    const emptyState: Player[] = [];
-    deepFreeze(initialState);
-    expect(players(initialState, removePlayerAction)).toEqual(emptyState);
-  });
-});
-
+import { AddPlayerAction, RemovePlayerAction, Color } from '../gameTypes';
 describe('Colors reducer', () => {
   let defaultColors: ReadonlyArray<Color>;
   beforeEach(() => {
@@ -73,6 +28,7 @@ describe('Colors reducer', () => {
     const action: RemovePlayerAction = {
       type: 'REMOVE_PLAYER',
       payload: {
+        playerName: 'ramiro',
         color: 'blue'
       }
     };

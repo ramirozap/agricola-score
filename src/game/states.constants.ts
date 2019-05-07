@@ -1,31 +1,31 @@
-export interface IState {
+export interface State {
   readonly url: string;
   readonly title: string;
-  readonly prevState?: keyof IStates;
-  readonly nextState?: keyof IStates;
+  readonly prevState?: keyof States;
+  readonly nextState?: keyof States;
 }
 
-export interface IStates {
-  readonly home: IState;
-  readonly fields: IState;
-  readonly pastures: IState;
-  readonly grains: IState;
-  readonly vegetables: IState;
-  readonly sheeps: IState;
-  readonly boars: IState;
-  readonly cattles: IState;
-  readonly unusedSpaces: IState;
-  readonly fencedStables: IState;
-  readonly clayRooms: IState;
-  readonly stoneRooms: IState;
-  readonly familyMembers: IState;
-  readonly cards: IState;
-  readonly bonus: IState;
-  readonly beggarCards: IState;
-  readonly result: IState;
+export interface States {
+  readonly home: State;
+  readonly fields: State;
+  readonly pastures: State;
+  readonly grains: State;
+  readonly vegetables: State;
+  readonly sheeps: State;
+  readonly boars: State;
+  readonly cattles: State;
+  readonly unusedSpaces: State;
+  readonly fencedStables: State;
+  readonly clayRooms: State;
+  readonly stoneRooms: State;
+  readonly familyMembers: State;
+  readonly cards: State;
+  readonly bonus: State;
+  readonly beggarCards: State;
+  readonly result: State;
 }
 
-const states: IStates = {
+const STATES: States = {
   home: { url: '/', title: 'New Game' },
   fields: {
     url: '/points/fields',
@@ -124,4 +124,4 @@ const states: IStates = {
   }
 };
 
-export default states;
+export default STATES;

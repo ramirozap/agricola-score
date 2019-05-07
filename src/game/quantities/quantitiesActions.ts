@@ -4,38 +4,37 @@ import {
   SetQuantityAction,
   QuantitiesKeys
 } from './quantitiesTypes';
-import { Color } from '../gameTypes';
 
 export function increment(
   key: QuantitiesKeys,
-  color: Color
+  playerName: string
 ): IncrementQuantityAction {
   return {
     type: 'INCREMENT_QUANTITY',
     payload: {
       key,
-      color
+      playerName
     }
   };
 }
 
 export function decrement(
   key: QuantitiesKeys,
-  color: Color
+  playerName: string
 ): DecrementQuantityAction {
   return {
     type: 'DECREMENT_QUANTITY',
-    payload: { key, color }
+    payload: { key, playerName }
   };
 }
 
 export function setQuantity(
   key: QuantitiesKeys,
   newQuantity: number,
-  color: Color
+  playerName: string
 ): SetQuantityAction {
   return {
     type: 'SET_QUANTITY',
-    payload: { key, newQuantity, color }
+    payload: { key, newQuantity, playerName }
   };
 }
