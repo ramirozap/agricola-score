@@ -2,10 +2,10 @@ import React from 'react';
 import { Players } from './gameTypes';
 import { removePlayer } from './gameActions';
 
-type Props = {
+interface Props {
   players: Players;
   removePlayer: typeof removePlayer;
-};
+}
 
 const PlayerList = ({ players, removePlayer }: Props) => {
   if (!players.allPlayers.length) {

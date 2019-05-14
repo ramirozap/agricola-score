@@ -1,12 +1,6 @@
 import { GameAction, Color } from '../gameTypes';
 
-const defaultColors: ReadonlyArray<Color> = [
-  'blue',
-  'green',
-  'purple',
-  'red',
-  'white'
-];
+const defaultColors: Color[] = ['blue', 'green', 'purple', 'red', 'white'];
 
 export const colors = (state = defaultColors, action: GameAction) => {
   switch (action.type) {

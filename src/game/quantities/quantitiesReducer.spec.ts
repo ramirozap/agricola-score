@@ -1,29 +1,21 @@
-import {
-  quantity,
-  defaultQuantities,
-  playersQuantities
-} from './quantitiesReducer';
+import { defaultQuantities, playersQuantities } from './quantitiesReducer';
 import {
   IncrementQuantityAction,
-  Quantities,
   DecrementQuantityAction,
   SetQuantityAction,
   PlayersQuantities
 } from './quantitiesTypes';
 import { DeepReadonly } from 'deep-freeze';
 import { AddPlayerAction, RemovePlayerAction } from '../gameTypes';
-import { sheeps } from './quantitiesSelectors';
 
 describe('Quantity Reducer', () => {
   let initialState: DeepReadonly<PlayersQuantities>;
-  let payload: { [key: string]: string };
   beforeEach(() => {
     initialState = {
       ramiro: {
         ...defaultQuantities
       }
     };
-    payload = { key: 'cattles', playerName: 'ramiro' };
   });
 
   it('add player', () => {

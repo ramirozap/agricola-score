@@ -18,7 +18,7 @@ import {
   getStoneRoomsPoints
 } from './pointSelectors';
 
-const BIG_INT: number = 99999;
+const BIG_INT = 99999;
 let baseState: Quantities;
 
 describe('Scoring functions: ', () => {

@@ -2,7 +2,7 @@ import { colors } from './colorsReducers';
 import deepFreeze from 'deep-freeze';
 import { AddPlayerAction, RemovePlayerAction, Color } from '../gameTypes';
 describe('Colors reducer', () => {
-  let defaultColors: ReadonlyArray<Color>;
+  let defaultColors: Color[];
   beforeEach(() => {
     defaultColors = ['blue', 'green', 'purple', 'red', 'white'];
     deepFreeze(defaultColors);
@@ -33,7 +33,7 @@ describe('Colors reducer', () => {
       }
     };
     //remove 'blue' as if a player picked it before
-    const currentState: ReadonlyArray<Color> = [...defaultColors.slice(1)];
+    const currentState: Color[] = [...defaultColors.slice(1)];
     deepFreeze(currentState);
     expect(colors(currentState, action)).toEqual(
       [...currentState, 'blue'].sort()

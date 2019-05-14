@@ -203,11 +203,11 @@ export const getTotalPoints = createSelector(
   sum
 );
 
-interface ICalcFunctions {
+interface CalcFunctions {
   [key: string]: OutputSelector<Quantities, number, (res: number) => number>;
 }
 
-const calcFunctions: ICalcFunctions = {
+const calcFunctions: CalcFunctions = {
   getFieldsPoints,
   getPasturesPoints,
   getGrainsPoints,
