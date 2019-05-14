@@ -1,4 +1,4 @@
-import { AddPlayerAction, Color, RemovePlayerAction } from '../gameTypes';
+import { AddPlayerAction, RemovePlayerAction } from '../gameTypes';
 
 export interface Quantities {
   readonly beggarCards: number;

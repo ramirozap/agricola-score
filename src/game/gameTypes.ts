@@ -13,9 +13,9 @@ export interface RemovePlayerAction {
   payload: { playerName: string; color: Color };
 }
 
-export type DefaultAction = {
+export interface DefaultAction {
   type: 'DEFAULT';
-};
+}
 
 export interface GenericAction {
   type: string;
@@ -33,17 +33,17 @@ export interface Player {
   color: string;
 }
 
-export type Players = {
+export interface Players {
   playersById: { [key: string]: Player };
   allPlayers: string[];
-};
+}
 
 export type Color = string;
 
 export interface RootState {
   entities: {
-    colors: Color[];
-    players: Players;
-    quantities: PlayersQuantities;
+    readonly colors: Color[];
+    readonly players: Players;
+    readonly quantities: PlayersQuantities;
   };
 }

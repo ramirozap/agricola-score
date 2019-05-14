@@ -19,7 +19,7 @@ interface Match extends match {
   params: { pointType: QuantitiesKeys };
 }
 
-type props = {
+interface Props {
   players: Players;
   match: Match;
   quantities: PlayersQuantities;
@@ -36,7 +36,7 @@ type props = {
     value: number,
     color: Color
   ) => SetQuantityAction;
-};
+}
 
 const PointSection = ({
   players,
@@ -45,7 +45,7 @@ const PointSection = ({
   decrement,
   setQuantity,
   quantities
-}: props) => {
+}: Props) => {
   const { pointType } = match.params;
   const { prevState, nextState, title } = STATES[pointType];
   const prevStateControls = prevState ? (

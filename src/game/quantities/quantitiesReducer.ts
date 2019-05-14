@@ -23,6 +23,31 @@ export const defaultQuantities: DeepReadonly<Quantities> = {
   vegetables: 0
 };
 
+export const quantity = (
+  state = defaultQuantities,
+  action: QuantityActions
+) => {
+  switch (action.type) {
+    case 'INCREMENT_QUANTITY':
+      return {
+        ...state,
+        [action.payload.key]: state[action.payload.key] + 1
+      };
+    case 'DECREMENT_QUANTITY':
+      return {
+        ...state,
+        [action.payload.key]: state[action.payload.key] - 1
+      };
+    case 'SET_QUANTITY':
+      return {
+        ...state,
+        [action.payload.key]: action.payload.newQuantity
+      };
+    default:
+      return state;
+  }
+};
+
 const defaultState: PlayersQuantities = {};
 
 export const playersQuantities = (
@@ -50,31 +75,6 @@ export const playersQuantities = (
       let newState = { ...state };
       delete newState[action.payload.playerName];
       return newState;
-    default:
-      return state;
-  }
-};
-
-export const quantity = (
-  state = defaultQuantities,
-  action: QuantityActions
-) => {
-  switch (action.type) {
-    case 'INCREMENT_QUANTITY':
-      return {
-        ...state,
-        [action.payload.key]: state[action.payload.key] + 1
-      };
-    case 'DECREMENT_QUANTITY':
-      return {
-        ...state,
-        [action.payload.key]: state[action.payload.key] - 1
-      };
-    case 'SET_QUANTITY':
-      return {
-        ...state,
-        [action.payload.key]: action.payload.newQuantity
-      };
     default:
       return state;
   }
