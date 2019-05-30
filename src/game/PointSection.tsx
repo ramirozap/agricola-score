@@ -3,17 +3,13 @@ import { Link, match } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RootState, Players } from './gameTypes';
 import STATES from './states.constants';
-import { getTypePoints } from './quantities/pointSelectors';
 import * as quantitiesActions from './quantities/quantitiesActions';
 import {
-  IncrementQuantityAction,
-  DecrementQuantityAction,
-  SetQuantityAction,
   QuantitiesKeys,
   PlayersQuantities
 } from './quantities/quantitiesTypes';
 import { bindActionCreators } from 'redux';
-import { Color } from 'csstype';
+import PointRow from './PointRow';
 
 interface Match extends match {
   params: { pointType: QuantitiesKeys };
@@ -23,29 +19,9 @@ interface Props {
   players: Players;
   match: Match;
   quantities: PlayersQuantities;
-  increment: (
-    pointType: QuantitiesKeys,
-    color: Color
-  ) => IncrementQuantityAction;
-  decrement: (
-    pointType: QuantitiesKeys,
-    color: Color
-  ) => DecrementQuantityAction;
-  setQuantity: (
-    pointType: QuantitiesKeys,
-    value: number,
-    color: Color
-  ) => SetQuantityAction;
 }
 
-const PointSection = ({
-  players,
-  match,
-  increment,
-  decrement,
-  setQuantity,
-  quantities
-}: Props) => {
+const PointSection = ({ players, match, quantities }: Props) => {
   const { pointType } = match.params;
   const { prevState, nextState, title } = STATES[pointType];
   const prevStateControls = prevState ? (
@@ -67,30 +43,13 @@ const PointSection = ({
         <div>Total</div>
         <div />
         <div>Points</div>
-        {players.allPlayers.map(playerId => {
-          const { color, name } = players.playersById[playerId];
-          return (
-            <React.Fragment key={color}>
-              <div>{name}</div>
-              <div>
-                <button onClick={() => decrement(pointType, name)}>-</button>
-              </div>
-              <div>
-                <input
-                  type="number"
-                  value={quantities[name][pointType]}
-                  onChange={e =>
-                    setQuantity(pointType, parseInt(e.target.value) || 0, name)
-                  }
-                />
-              </div>
-              <div>
-                <button onClick={() => increment(pointType, name)}>+</button>
-              </div>
-              <div>{getTypePoints(quantities[name], pointType)}</div>
-            </React.Fragment>
-          );
-        })}
+        {players.allPlayers.map(playerId => (
+          <PointRow
+            key={playerId}
+            name={players.playersById[playerId].name}
+            pointType={pointType}
+          />
+        ))}
       </div>
       {prevStateControls}
       {nextStateControls}
@@ -102,8 +61,7 @@ const getPlayers = (state: RootState) => state.entities.players;
 
 const mapStateToProps = (state: RootState) => {
   return {
-    players: getPlayers(state),
-    quantities: state.entities.quantities
+    players: getPlayers(state)
   };
 };
 

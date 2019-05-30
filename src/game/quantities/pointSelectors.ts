@@ -229,9 +229,6 @@ const capitalize = (type: string) => {
   return type.charAt(0).toUpperCase() + type.slice(1);
 };
 
-export const getTypePoints = (
-  state: Quantities,
-  type: QuantitiesKeys
-): number => {
+export const getTypePoints = (state: Quantities, type: QuantitiesKeys) => {
   return calcFunctions[`get${capitalize(type)}Points`](state);
 };
