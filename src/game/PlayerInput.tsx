@@ -34,9 +34,13 @@ const PlayerInput: React.SFC<Props> = ({
 
   const savePlayer = () => {
     addPlayer(playerName, selectedColor);
-
     setPlayerName('');
   };
+
+  const isButtonDisabled = () =>
+    !playerName ||
+    (players && players.allPlayers.length >= 5) ||
+    players.allPlayers.includes(playerName);
 
   useEffect(() => {
     setSelectedColor(colors[0]);
@@ -60,11 +64,7 @@ const PlayerInput: React.SFC<Props> = ({
           );
         })}
       </select>
-      <button
-        onClick={savePlayer}
-        type="button"
-        disabled={players && players.allPlayers.length >= 5}
-      >
+      <button onClick={savePlayer} type="button" disabled={isButtonDisabled()}>
         Add Player
       </button>
       <PlayerList players={players} removePlayer={removePlayer} />
