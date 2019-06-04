@@ -1,5 +1,5 @@
 import { createSelector, OutputSelector } from 'reselect';
-import { Quantities, QuantitiesKeys } from './quantitiesTypes';
+import { Quantities, QuantitiesKeys } from '../quantities/quantitiesTypes';
 import {
   beggarCards,
   fields,
@@ -16,7 +16,9 @@ import {
   familyMembers,
   bonus,
   cards
-} from './quantitiesSelectors';
+} from '../quantities/quantitiesSelectors';
+import { RootState } from '../gameTypes';
+import { getPlayers, getPlayerQuantities } from '../gameSelectors';
 
 const fieldsPoints = (fields: Quantities['fields']) => {
   if (fields <= 1 || !fields) {
@@ -231,4 +233,15 @@ const capitalize = (type: string) => {
 
 export const getTypePoints = (state: Quantities, type: QuantitiesKeys) => {
   return calcFunctions[`get${capitalize(type)}Points`](state);
+};
+
+export const getResults = (state: RootState) => {
+  return getPlayers(state).allPlayers.map(playerName => {
+    const playerQuantities = getPlayerQuantities(state, playerName);
+    return {
+      playerName,
+      total: getTotalPoints(playerQuantities),
+      playerQuantities
+    };
+  });
 };

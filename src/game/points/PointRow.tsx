@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
-import * as quantitiesActions from './quantities/quantitiesActions';
-import { getTypePoints } from './quantities/pointSelectors';
-import { QuantitiesKeys } from './quantities/quantitiesTypes';
-import { getQuantity, getPlayerQuantities } from './gameSelectors';
-import { RootState } from './gameTypes';
+import * as quantitiesActions from '../quantities/quantitiesActions';
+import { getTypePoints } from './pointSelectors';
+import { QuantitiesKeys } from '../quantities/quantitiesTypes';
+import { getQuantity, getPlayerQuantities } from '../gameSelectors';
+import { RootState } from '../gameTypes';
 
 interface Props {
   name: string;
