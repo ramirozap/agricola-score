@@ -1,4 +1,4 @@
-import { Quantities } from './quantitiesTypes';
+import { Quantities } from '../quantities/quantitiesTypes';
 import {
   getBeggarCardsPoints,
   getBoarsPoints,

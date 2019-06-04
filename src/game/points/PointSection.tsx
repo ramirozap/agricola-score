@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link, match } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { RootState, Players } from './gameTypes';
-import STATES from './states.constants';
-import * as quantitiesActions from './quantities/quantitiesActions';
+import { RootState, Players } from '../gameTypes';
+import STATES from '../states.constants';
+import * as quantitiesActions from '../quantities/quantitiesActions';
 import {
   QuantitiesKeys,
   PlayersQuantities
-} from './quantities/quantitiesTypes';
+} from '../quantities/quantitiesTypes';
 import { bindActionCreators } from 'redux';
 import PointRow from './PointRow';
 
