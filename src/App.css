@@ -1,17 +1,17 @@
 body {
-  background-color: #282c34;
-  color: #61dafb;
+	background-color: #282c34;
+	color: #61dafb;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 50px 1fr 50px 1fr;
+	display: grid;
+	grid-template-columns: 1fr 50px 1fr 50px 1fr;
 }
 
 .grid header {
-  grid-template-columns: 1fr;
+	grid-template-columns: 1fr;
 }
 
 .grid footer {
-  grid-template-columns: 1fr;
+	grid-template-columns: 1fr;
 }
