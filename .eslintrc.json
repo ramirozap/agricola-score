@@ -1,8 +1,8 @@
 {
-  "extends": [
-    "react-app",
-    "./node_modules/react-redux-typescript-scripts/eslint.js",
-    "prettier/@typescript-eslint"
-  ],
-  "rules": { "no-console": "warn" }
+	"extends": [
+		"react-app",
+		"./node_modules/react-redux-typescript-scripts/eslint.js",
+		"prettier/@typescript-eslint"
+	],
+	"rules": { "no-console": "warn" }
 }

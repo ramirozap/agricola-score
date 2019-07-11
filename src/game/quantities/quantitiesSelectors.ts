@@ -17,21 +17,21 @@ export const unusedSpaces = (state: Quantities) => state.unusedSpaces;
 export const vegetables = (state: Quantities) => state.vegetables;
 
 const quantitiesSelectors: QuantitiesSelectors = {
-  beggarCards,
-  boars,
-  bonus,
-  cards,
-  cattles,
-  clayRooms,
-  familyMembers,
-  fencedStables,
-  fields,
-  grains,
-  sheeps,
-  pastures,
-  stoneRooms,
-  unusedSpaces,
-  vegetables
+	beggarCards,
+	boars,
+	bonus,
+	cards,
+	cattles,
+	clayRooms,
+	familyMembers,
+	fencedStables,
+	fields,
+	grains,
+	sheeps,
+	pastures,
+	stoneRooms,
+	unusedSpaces,
+	vegetables
 };
 
 export default quantitiesSelectors;

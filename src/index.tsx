@@ -6,10 +6,10 @@ import App from './App';
 import store from './store';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('app')
+	<Provider store={store}>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</Provider>,
+	document.getElementById('app')
 );
