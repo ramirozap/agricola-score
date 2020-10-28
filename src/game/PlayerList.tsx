@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { Players } from './gameTypes';
 import { removePlayer } from './gameActions';
 
@@ -6,6 +7,10 @@ interface Props {
 	players: Players;
 	removePlayer: typeof removePlayer;
 }
+
+const Button = styled.button`
+	color: hotpink;
+`;
 
 const PlayerList = ({ players, removePlayer }: Props) => {
 	if (!players.allPlayers.length) {
@@ -19,7 +24,7 @@ const PlayerList = ({ players, removePlayer }: Props) => {
 				return (
 					<li key={color}>
 						{name} - {color}{' '}
-						<button onClick={() => removePlayer(name, color)}>X</button>
+						<Button onClick={() => removePlayer(name, color)}>X</Button>
 					</li>
 				);
 			})}
